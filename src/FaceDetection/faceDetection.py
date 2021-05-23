@@ -1,9 +1,13 @@
 import cv2
+import pyautogui as p
 
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eyeCascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
 video_capture = cv2.VideoCapture(0)
+
+counter1 = 0
+counter2 = 0
 
 while True:
     # Capture frame-by-frame
@@ -18,8 +22,17 @@ while True:
         minSize=(30, 30),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
+    
+    if len(faces) == 0:
+        counter1 += 1
+        if counter1 < 30:
+            continue
+        else:
+            counter1 = 0
+            p.press("q")
 
     for (x, y, w, h) in faces:
+        
         # Draw a rectangle around the face
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
         # Crop the grayscale frame to be the face area
@@ -32,9 +45,15 @@ while True:
         for (ex, ey, ew, eh) in eyes:
             # Draw a rectangle around the eyes
             cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (255, 0, 0), 2)
-        
-        #if len(eyes) == 0:
-
+            
+        if len(eyes) == 0:
+            counter2 += 1
+            if counter2 < 30:
+                continue
+            else:
+                counter2 = 0
+                p.press("q")
+                
     # Display the resulting frame
     cv2.imshow('Video', frame)
     # Quit
