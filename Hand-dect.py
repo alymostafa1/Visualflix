@@ -27,6 +27,7 @@ def FindControur(contours):
 vid = cv2.VideoCapture(0)
 vid.set(3, 800)  # width=800
 vid.set(4, 720)  # height=720 
+cv2.SetCaptureProperty(vid, CV_CAP_PROP_BUFFERSIZE, 3)
 if not vid.isOpened():
   print ("Could not open Camera")
   exit()
@@ -65,10 +66,9 @@ while(True):
     img = cv2.bitwise_and(ROI, ROI, mask=fgmask) 
     
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    lower = np.array([0, 58, 50], dtype="uint8")
-    upper = np.array([30, 255, 255], dtype="uint8")
-    skinMask = cv2.inRange(hsv, lower, upper)
-    # skinMask = cv2.bitwise_not(skinMask)    
+    lower = np.array([0, 48, 80], dtype="uint8")
+    upper = np.array([20, 255, 255], dtype="uint8")
+    skinMask = cv2.inRange(hsv, lower, upper)   
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (10, 10))
     hsv_d = cv2.dilate(skinMask, kernel)    
     closing = cv2.morphologyEx(hsv_d, cv2.MORPH_CLOSE, kernel)    
