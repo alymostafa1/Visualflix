@@ -6,8 +6,6 @@ from src.HandDetection.Api import *
 from src.FaceDetection.faceDetection import *
 #from src.faceDetection2 import * 
 
-faceCascade = cv2.CascadeClassifier('D:\4th CSE\Second Term\Image Processing\SmartMediaPlayer\src\FaceDetection\haarcascade_frontalface_default.xml')
-eyeCascade = cv2.CascadeClassifier('D:\4th CSE\Second Term\Image Processing\SmartMediaPlayer\src\FaceDetection\haarcascade_eye.xml')
 
 vid = cv2.VideoCapture(0)
 vid.set(3, 800)  # width=800
@@ -25,7 +23,7 @@ while(True):
     display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)
     # cv2.imshow('curFrame',frame)
     count_defects , display  =  HandDetection(frame)   
-    eye_flag  = faceDetect(frame, faceCascade, eyeCascade)
+    eye_flag  = faceDetect(frame) #, faceCascade, eyeCascade)
    
     if count_defects == 0 and eye_flag == 1:
        print("0")   

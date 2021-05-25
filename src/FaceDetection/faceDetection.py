@@ -1,18 +1,16 @@
 import cv2
-import pyautogui as p
 
-# faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-# eyeCascade = cv2.CascadeClassifier('haarcascade_eye.xml')
-
-def faceDetect(frame, faceCascade, eyeCascade):
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+def faceDetect(frame): #, faceCascade, eyeCascade):
+    faceCascade = cv2.CascadeClassifier('D:\\4th CSE\\Second Term\\Image Processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_frontalface_default.xml')
+    eyeCascade = cv2.CascadeClassifier('D:\\4th CSE\\Second Term\\Image Processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_eye.xml')
+    # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     try:
         # Detect face using a trained classifier
         faces = faceCascade.detectMultiScale(
-            gray,
+            frame,
             scaleFactor=1.1,
             minNeighbors=5,
-            minSize=(30, 30),
+            #minSize=(30, 30),
             flags=cv2.CASCADE_SCALE_IMAGE
         )
     except:
@@ -25,7 +23,7 @@ def faceDetect(frame, faceCascade, eyeCascade):
         # Draw a rectangle around the face
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
         # Crop the grayscale frame to be the face area
-        roi_gray = gray[y:y+h, x:x+w]
+        roi_gray = frame[y:y+h, x:x+w]
         # Crop the colored frame to be the face area
         roi_color = frame[y:y+h, x:x+w]
         # Detect the eyes using a trained classifier
