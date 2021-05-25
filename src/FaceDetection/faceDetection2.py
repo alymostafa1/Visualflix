@@ -18,7 +18,7 @@ while True:
     blank = np.zeros_like(frame)
     region_of_interest = cv2.fillPoly(blank, ROI, 255)
     region_of_interest_image = cv2.bitwise_and(frame, region_of_interest)
-    
+     
     ##### EYES 
     ROI = np.array([[(270,150),(270,200),(400,200),(400,150)]], dtype= np.int32)  
     cv2.rectangle(frame, (270, 150), (400, 200), (0, 0, 255), 2)
@@ -43,8 +43,8 @@ while True:
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
     #cv2.drawContours(frame, contours, -1, (255,0,0), 2)
-      
-    if len(contours) <= 40: ### EYES ARE SHUT
+
+    if len(contours) <= 20: ### EYES ARE SHUT
         counter += 1
         if counter < 40:
             continue
