@@ -10,8 +10,10 @@ if not vid .isOpened():
   exit()
 
 
-  
+flag_2 = 0
+Eye_flag = 0
 while(True):
+    
     ret, frame = vid.read()  
     display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)    
     cv2.imshow('curFrame',display.copy())
@@ -59,7 +61,7 @@ while(True):
         Locating the contours in the ROI after thresholding
          '''              
         defects , contours, contour = ContourLocator(YCrCb_th, ROI)
-        # if(len(contours)):
+        
         cv2.drawContours(display, contours, -1, (0, 255, 0), 3)    
         count_defects = 0
         
@@ -69,13 +71,14 @@ while(True):
         count_defects = DetectAngle(defects, display, contour)
 
         # define actions required
-        # ActionDetector(count_defects, display)       
+        # ActionDetector(count_defects, display)  
+        
         if count_defects == 0:
               cv2.putText(display, " ", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
                          (0, 255, 255),
                          2,
                          cv2.LINE_4)
-              Zero_flag = 0
+              # flag_2 += 1
         elif count_defects == 1 :
             p.press("up")
             cv2.putText(display, "Increase volume" + str(count_defects), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
@@ -97,12 +100,13 @@ while(True):
                         cv2.LINE_4)
             flag = 0
         elif count_defects == 4 and flag == 0:
-            p.press("space")
+            p.press("space")            
             cv2.putText(display, "start/pause" + str(count_defects), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (0, 255, 255),
                         2,
                         cv2.LINE_4)
             flag = 1
+            
     except: 
         continue
     

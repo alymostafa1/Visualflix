@@ -35,7 +35,7 @@ def RGB_Threshold(ROI):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     lower = np.array([0, 50, 80], dtype="uint8")
     upper = np.array([20, 255, 255], dtype="uint8")
-     # lower = np.array([45, 34, 30], dtype="uint8")
+    # lower = np.array([45, 34, 30], dtype="uint8")
     # upper = np.array([255, 229, 200], dtype="uint8")
     skinMask = cv2.inRange(hsv, lower, upper)   
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (10, 10))
@@ -49,20 +49,15 @@ def YCrCb(ROI):
     min_YCrCb = np.array([0,133,77],np.uint8)
     max_YCrCb = np.array([255,173,127],np.uint8)
     skinRegion = cv2.inRange(imageYCrCb,min_YCrCb,max_YCrCb)
-    return skinRegion
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    hsv_d = cv2.dilate(skinRegion, kernel)    
+    closing = cv2.morphologyEx(hsv_d, cv2.MORPH_CLOSE, kernel)
+    return closing
 
 
 def ContourLocator(CurrentFrame, ROI):
     
         contours, hierarchy = cv2.findContours(CurrentFrame,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) 
-        # print(len(contours))
-        # fake_cont = [181 412]
-        
-        # if(len(contours) == 0):
-        #     print("NoneType contour")
-        #     contours.append([[181 , 412]])
-        # print("----------------------------")
-        # print(len(contours))
         
         # find contour with max area    
         contour = max(contours, key = lambda x: cv2.contourArea(x))
@@ -146,3 +141,66 @@ def ActionDetector(count_defects ,display ):
                     2,
                     cv2.LINE_4)
         flag = 1
+        
+def HandDetection(frame): 
+    
+    flag_2 = 0
+    # Eye_flag = 0
+    
+    display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)    
+    # cv2.imshow('curFrame',display.copy())
+      
+    ROI = frame[0:500, 0:300].copy() # Region of interest 
+    ROI_2 = frame.copy()
+    # cv2.imshow('Current Roi', ROI)
+    
+    # Transform the image into grey scale image 
+    grey = cv2.cvtColor(ROI, cv2.COLOR_BGR2GRAY)
+
+    # applying gaussian blur
+    value = (5, 5)
+    blurred = cv2.GaussianBlur(grey, value, 0)    
+    # cv2.imshow('Blurred' ,blurred)
+
+    '''
+    First method to threshold the hand 
+    '''
+    # thresholdin: Otsu's Binarization method
+    _, thresh1 = cv2.threshold(blurred, 127, 255,
+                               cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)    
+    # cv2.imshow('Thresholded' ,thresh1)
+    
+    '''
+    Second method to threshold the hand 
+    '''
+    SkinMask = RGB_Threshold(ROI)
+    # cv2.imshow('Skin RGB' ,SkinMask)
+    
+    '''
+    Third Method to threshold the hand 
+    '''
+    GThreshold = cv2.adaptiveThreshold(blurred,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)          
+    # cv2.imshow('Gaussian Threshol ', GThreshold)
+    
+    '''
+    Fourth Method to threshold the hand 
+    '''
+    YCrCb_th = YCrCb(ROI)   
+    # cv2.imshow('YCRCB Thresholding', YCrCb_th)
+
+    try:  
+        '''
+        Locating the contours in the ROI after thresholding
+         '''              
+        defects , contours, contour = ContourLocator(YCrCb_th, ROI)
+        
+        cv2.drawContours(display, contours, -1, (0, 255, 0), 3)    
+        count_defects = 0
+        
+        '''
+        Detecting the angle of each Convex Defect and returning the number of Defects
+        '''
+        count_defects = DetectAngle(defects, display, contour)
+    except: 
+        count_defects = 10
+    return count_defects , display
