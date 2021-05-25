@@ -53,6 +53,8 @@ while True:
             else:
                 counter2 = 0
                 p.press("q")
+        else: 
+            counter2=0 
                 
     # Display the resulting frame
     cv2.imshow('Video', frame)
