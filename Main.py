@@ -4,6 +4,8 @@
 # from Api import *
 from src.HandDetection.Api import *
 from src.FaceDetection.faceDetection import *
+from src.FaceDetection.faceDetection2 import *
+
 #from src.faceDetection2 import * 
 
 
@@ -22,8 +24,9 @@ while(True):
     ret, frame = vid.read() 
     display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)
     # cv2.imshow('curFrame',frame)
-    count_defects , display  =  HandDetection(frame)   
-    eye_flag  = faceDetect(frame) #, faceCascade, eyeCascade)
+    count_defects , display  =  HandDetection(frame)  
+    eye_flag  = faceDetect(frame)
+    #eye_flag  = faceDetect2(frame)
    
     if count_defects == 0 and eye_flag == 1:
        print("0")   
