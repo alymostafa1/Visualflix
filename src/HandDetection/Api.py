@@ -90,16 +90,16 @@ def DetectAngle(defects, display, contour):
             angle = math.acos((b**2 + c**2 - a**2)/(2*b*c)) * 57
     
             # drawing a circle on the finger tip 
-            if start[1] <= 400: 
-                cv2.circle(display, start , 1, [255,0,0], 5)
+            # if start[1] <= 400: 
+                # cv2.circle(display, start , 1, [255,0,0], 5)
     
             # ignore angles > 90 and highlight rest with red dots
             if angle <= 90:
                 count_defects += 1
-                cv2.circle(display, far, 1, [100,0,255], 5)
+                # cv2.circle(display, far, 1, [100,0,255], 5)
                 if far[1]  > 400: 
                       count_defects -= 1
-                      cv2.circle(display, far, 1, [0,0,0], 5)
+                      # cv2.circle(display, far, 1, [0,0,0], 5)
                 
         return count_defects
 
@@ -142,7 +142,7 @@ def ActionDetector(count_defects ,display ):
                     cv2.LINE_4)
         flag = 1
         
-def HandDetection(frame): 
+def HandDetection(frame, draw_contour = False, draw_thresholds = False): 
     
     flag_2 = 0
     # Eye_flag = 0
@@ -167,34 +167,37 @@ def HandDetection(frame):
     '''
     # thresholdin: Otsu's Binarization method
     _, thresh1 = cv2.threshold(blurred, 127, 255,
-                               cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)    
-    # cv2.imshow('Thresholded' ,thresh1)
-    
+                               cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)        
     '''
     Second method to threshold the hand 
     '''
     SkinMask = RGB_Threshold(ROI)
-    # cv2.imshow('Skin RGB' ,SkinMask)
+
     
     '''
     Third Method to threshold the hand 
     '''
     GThreshold = cv2.adaptiveThreshold(blurred,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)          
-    # cv2.imshow('Gaussian Threshol ', GThreshold)
+
     
     '''
     Fourth Method to threshold the hand 
     '''
     YCrCb_th = YCrCb(ROI)   
-    # cv2.imshow('YCRCB Thresholding', YCrCb_th)
+
+    
+    if draw_thresholds == True:         
+        cv2.imshow('Thresholded' ,thresh1)
+        cv2.imshow('Skin RGB' ,SkinMask)
+        cv2.imshow('Gaussian Threshol ', GThreshold)
 
     try:  
         '''
         Locating the contours in the ROI after thresholding
          '''              
         defects , contours, contour = ContourLocator(YCrCb_th, ROI)
-        
-        cv2.drawContours(display, contours, -1, (0, 255, 0), 3)    
+        if draw_contour == True :
+            cv2.drawContours(display, contours, -1, (0, 255, 0), 3)    
         count_defects = 0
         
         '''
