@@ -22,6 +22,7 @@ if not vid .isOpened():
 
 eye_count = 0
 volume_flag = 0
+closed_eye_counter = 0
 
   
 while(True):
@@ -59,10 +60,22 @@ while(True):
                print(eye_count)
                eye_count += 1
                # print("eyesclosed")
-            else:
+            else:               
                 eye_count = 0
-                p.press("space")
+                closed_eye_counter += 1
                 list_player.pause()
+                
+                # if eye closed more than 5 times                
+                if closed_eye_counter > 4 :                    
+                    window['-MESSAGE_AREA-'].update('GoodNight sleepy Head')
+                    list_player.pause()
+                    list_player.stop()
+                    window.close()
+                    break
+            # If eye is opened after being closed   
+            # if closed_eye_counter > 1 and eye_count == 0:
+            #     print("True")
+            #     list_player.pause()
         
         else:    
             p.press("space") 
@@ -73,7 +86,7 @@ while(True):
         eye_count = 0
     cv2.imshow('curFrame',display)
     
-    
+    # print(count_defects)
         #------------ The Event Loop ------------#
     # while True:
     event, values = window.read(timeout=10)       # run with a timeout so that current location can be updated

@@ -8,7 +8,7 @@ from sys import platform as PLATFORM
 
 
 def btn(name):  # a PySimpleGUI "User Defined Element" (see docs)
-    return sg.Button(name, size=(6, 1), pad=(1, 1))
+    return sg.Button(name, size=(6, 1), pad=(1, 1), button_color=('white', 'green'))
 
 def layout():
     sg.theme('DarkBlue')
