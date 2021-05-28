@@ -1,8 +1,9 @@
 import cv2
 
 def faceDetect(frame): #, faceCascade, eyeCascade):
-    faceCascade = cv2.CascadeClassifier('D:\\4th CSE\\Second Term\\Image Processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_frontalface_default.xml')
-    eyeCascade = cv2.CascadeClassifier('D:\\4th CSE\\Second Term\\Image Processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_eye.xml')
+    faceCascade = cv2.CascadeClassifier('H:\\kolya\\4th year\\2nd Term\\Image processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_frontalface_default.xml')
+                                        
+    eyeCascade = cv2.CascadeClassifier('H:\\kolya\\4th year\\2nd Term\\Image processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_eye.xml')
     # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     try:
         # Detect face using a trained classifier
@@ -30,7 +31,7 @@ def faceDetect(frame): #, faceCascade, eyeCascade):
         eyes = eyeCascade.detectMultiScale(roi_gray, 1.3, 5)
         
         for (ex, ey, ew, eh) in eyes:
-            print(len(eyes))
+            # print(len(eyes))
             # Draw a rectangle around the eyes
             cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (255, 0, 0), 2)
             

@@ -60,7 +60,7 @@ while(True):
         '''
         Locating the contours in the ROI after thresholding
          '''              
-        defects , contours, contour = ContourLocator(YCrCb_th, ROI)
+        defects , contours, contour = ContourLocator(SkinMask, ROI)
         
         cv2.drawContours(display, contours, -1, (0, 255, 0), 3)    
         count_defects = 0

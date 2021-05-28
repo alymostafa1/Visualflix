@@ -2,11 +2,15 @@
 # import os
 # sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # from Api import *
+import threaded
 from src.HandDetection.Api import *
 from src.FaceDetection.faceDetection import *
 from src.FaceDetection.faceDetection2 import *
+from src.GUI.Simple_Gui import *
 
-#from src.faceDetection2 import * 
+
+window, list_player, media_list, player = layout()
+
 
 
 vid = cv2.VideoCapture(0)
@@ -17,10 +21,11 @@ if not vid .isOpened():
   exit()
 
 eye_count = 0
+volume_flag = 0
 
   
 while(True):
-    
+
     ret, frame = vid.read() 
     display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)
     # cv2.imshow('curFrame',frame)
@@ -28,65 +33,88 @@ while(True):
     eye_flag  = faceDetect(frame)
     #eye_flag  = faceDetect2(frame)
    
-    if count_defects == 0 and eye_flag == 1:
-       print("0")   
-       x = 0
-          
+    if count_defects == 0 and eye_flag == 1:   
+        x = 0          
     elif count_defects == 1 and eye_flag == 1:
         p.press("up")
-        print("1")
-        # cv2.putText(display, "Increase volume" + str(count_defects), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
-        #             (0, 255, 255),
-        #             2,
-        #             cv2.LINE_4)
+        volume_flag += 10
+        player.audio_set_volume(int(volume_flag))
+        window['-MESSAGE_AREA-'].update('Volume Increase')
         flag = 0
         
     elif count_defects == 2 and eye_flag == 1:
-        print("2")
+        volume_flag -= 10
+        player.audio_set_volume(int(volume_flag))
+        window['-MESSAGE_AREA-'].update('Volume Decrease')
         p.press("down")
-        # cv2.putText(display, "Decrease Volume" + str(count_defects), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
-        #             (0, 255, 255),
-        #             2,
-        #             cv2.LINE_4)
         flag = 0
         
     elif count_defects == 3 and eye_flag == 1:
-        print("3")
         p.press("space") 
-        # cv2.putText(display, " ", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
-        #             (0, 255, 255),
-        #             2,
-        #             cv2.LINE_4)
         flag = 0
         
     elif (count_defects == 4 and flag == 0) or eye_flag == 0:
         if eye_flag == 0:
             if eye_count < 30:
+               print(eye_count)
                eye_count += 1
-               print("eyesclosed")
+               # print("eyesclosed")
             else:
                 eye_count = 0
                 p.press("space")
+                list_player.pause()
         
         else:    
-            print("4")
-            p.press("space")            
-            # cv2.putText(display, "start/pause" + str(count_defects), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
-            #             (0, 255, 255),
-            #             2,
-            #             cv2.LINE_4)
+            p.press("space") 
+            list_player.pause()
             flag = 1
             
     if eye_flag == 1:
         eye_count = 0
-    cv2.imshow('curFrame',frame)
-    #time.sleep(10)
-   
-    # for i in range(1000):  
-    #     x = 0
-       # print(str(i) + "Sec")
-   
+    cv2.imshow('curFrame',display)
+    
+    
+        #------------ The Event Loop ------------#
+    # while True:
+    event, values = window.read(timeout=10)       # run with a timeout so that current location can be updated
+    if event == sg.WIN_CLOSED:
+        list_player.stop()
+        window.close()
+        break
+
+    if event == 'play':
+        list_player.play()
+    if event == 'pause':
+        list_player.pause()
+    if event == 'stop':
+        list_player.stop()
+    if event == 'next':
+        list_player.next()
+        list_player.play()
+    if event == 'previous':
+        list_player.previous()      # first call causes current video to start over
+        list_player.previous()      # second call moves back 1 video from current
+        list_player.play()
+    if event == 'load':
+        if values['-VIDEO_LOCATION-'] and not 'Video URL' in values['-VIDEO_LOCATION-']:
+            media_list.add_media(values['-VIDEO_LOCATION-'])
+            list_player.set_media_list(media_list)
+            window['-VIDEO_LOCATION-'].update('Video URL or Local Path:') # only add a legit submit
+    if event == 'exit':
+        list_player.stop()
+        window.close()
+        break
+    
+        # update elapsed time if there is a video loaded and the player is playing
+    if player.is_playing():
+        window['-MESSAGE_AREA-'].update("{:02d}:{:02d} / {:02d}:{:02d}".format(*divmod(player.get_time()//1000, 60),
+                                                                     *divmod(player.get_length()//1000, 60)))
+    else:
+        window['-MESSAGE_AREA-'].update('Load media to start' if media_list.count() == 0 else 'Ready to play media' )
+    
     if cv2.waitKey(1) & 0xFF == ord('s'): # "S" to quit 
+        list_player.stop()
+        window.close()
         break
 vid.release()
 cv2.destroyAllWindows()
