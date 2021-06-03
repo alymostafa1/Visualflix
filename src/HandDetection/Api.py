@@ -189,7 +189,8 @@ def HandDetection(frame, draw_contour = False, draw_thresholds = False):
     if draw_thresholds == True:         
         cv2.imshow('Thresholded' ,thresh1)
         cv2.imshow('Skin RGB' ,SkinMask)
-        cv2.imshow('Gaussian Threshol ', GThreshold)
+        cv2.imshow('Gaussian Threshold ', GThreshold)
+        cv2.imshow('YCrCb Threshold ', YCrCb_th)
 
     try:  
         '''

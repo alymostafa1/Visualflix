@@ -1,7 +1,3 @@
-# import sys
-# import os
-# sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-# from Api import *
 import threaded
 from src.HandDetection.Api import *
 from src.FaceDetection.faceDetection import *
@@ -30,7 +26,7 @@ while(True):
     ret, frame = vid.read() 
     display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)
     # cv2.imshow('curFrame',frame)
-    count_defects , display  =  HandDetection(frame,draw_thresholds = False, draw_contour = False)  
+    count_defects , display  =  HandDetection(frame,draw_thresholds = False, draw_contour = True)  
     eye_flag  = faceDetect(frame)
 
    
@@ -72,10 +68,6 @@ while(True):
                     list_player.stop()
                     window.close()
                     break
-            # If eye is opened after being closed   
-            # if closed_eye_counter > 1 and eye_count == 0:
-            #     print("True")
-            #     list_player.pause()
         
         else:    
             p.press("space") 
@@ -89,7 +81,7 @@ while(True):
     # print(count_defects)
         #------------ The Event Loop ------------#
     # while True:
-    event, values = window.read(timeout=10)       # run with a timeout so that current location can be updated
+    event, values = window.read(timeout=0)       # run with a timeout so that current location can be updated
     if event == sg.WIN_CLOSED:
         list_player.stop()
         window.close()
