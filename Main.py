@@ -24,14 +24,15 @@ closed_eye_counter = 0
 while(True):
 
     ret, frame = vid.read() 
-    display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)
+    # display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)
     # cv2.imshow('curFrame',frame)
     count_defects , display  =  HandDetection(frame,draw_thresholds = False, draw_contour = True)  
     eye_flag  = faceDetect(frame)
+    
 
    
     if count_defects == 0 and eye_flag == 1:   
-        x = 0          
+        flag = 0         
     elif count_defects == 1 and eye_flag == 1:
         p.press("up")
         volume_flag += 10
@@ -47,13 +48,14 @@ while(True):
         flag = 0
         
     elif count_defects == 3 and eye_flag == 1:
-        p.press("space") 
+        # p.press("space") 
         flag = 0
-        
+
     elif (count_defects == 4 and flag == 0) or eye_flag == 0:
+        # print(count_defects)
         if eye_flag == 0:
             if eye_count < 30:
-               print(eye_count)
+               # print(eye_count)
                eye_count += 1
                # print("eyesclosed")
             else:               
@@ -69,14 +71,15 @@ while(True):
                     window.close()
                     break
         
-        else:    
+        elif count_defects == 4 and flag == 0:    
+            # print(count_defects)
             p.press("space") 
             list_player.pause()
             flag = 1
             
     if eye_flag == 1:
         eye_count = 0
-    cv2.imshow('curFrame',display)
+    cv2.imshow('curFrame',frame)
     
     # print(count_defects)
         #------------ The Event Loop ------------#

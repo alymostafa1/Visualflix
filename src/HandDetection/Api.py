@@ -198,7 +198,7 @@ def HandDetection(frame, draw_contour = False, draw_thresholds = False):
          '''              
         defects , contours, contour = ContourLocator(YCrCb_th, ROI)
         if draw_contour == True :
-            cv2.drawContours(display, contours, -1, (0, 255, 0), 3)    
+            cv2.drawContours(frame, contours, -1, (0, 255, 0), 3)    
         count_defects = 0
         
         '''
@@ -207,4 +207,4 @@ def HandDetection(frame, draw_contour = False, draw_thresholds = False):
         count_defects = DetectAngle(defects, display, contour)
     except: 
         count_defects = 10
-    return count_defects , display
+    return count_defects , frame
