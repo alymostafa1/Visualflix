@@ -1,4 +1,3 @@
-import threaded
 from src.HandDetection.Api import *
 from src.FaceDetection.faceDetection import *
 from src.FaceDetection.faceDetection2 import *
