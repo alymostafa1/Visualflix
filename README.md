@@ -52,7 +52,6 @@ This method has higher accuracy than the second method. The function draws recta
  * pysimplegui 4.43.0
  * python-vlc 3.0.12118
  
- 
-## Installation:
+
 
 
