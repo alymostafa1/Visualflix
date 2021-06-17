@@ -13,15 +13,9 @@ A smart media player using opencv and image processing techniques. it's the perf
   ![download-_1_](https://user-images.githubusercontent.com/64116564/120124165-483a0200-c1b3-11eb-9e9f-6223eafaecec.jpg)      
 
 
-## Team Members
-  * Aly Moustafa El-Kady
-  * Aya Tarek El-Ashry
-  * Lama Zeyad Ibrahim
-  * Yara Mohamed Zaki
-
 ## Overview Demo:
 
-
+**for detailed video:** https://www.youtube.com/watch?v=7pEoFo-ofSc
 ## Implementation:
 Our proposed algorithm first handle the Camera scene as two areas, The ROI (Region of interest) where the hand will be detected, and the area of the Face, 
 First, we start to preprocess the ROI by thresholding and subtracting the background.   
@@ -52,6 +46,13 @@ This method has higher accuracy than the second method. The function draws recta
  * pysimplegui 4.43.0
  * python-vlc 3.0.12118
  
+## Installation: 
 
+## User Guide:
 
+## Team Members
+  * Aly Moustafa El-Kady
+  * Aya Tarek El-Ashry
+  * Lama Zeyad Ibrahim
+  * Yara Mohamed Zaki
 
