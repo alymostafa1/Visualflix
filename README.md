@@ -47,12 +47,8 @@ This method has higher accuracy than the second method. The function draws recta
  * python-vlc 3.0.12118
  
 ## Installation: 
-1- git clone SmartMediaPlayer
+1- git clone SmartMediaPlayer  
 2- Run main.py from any IDE 
-
-## User Guide:
-
-
 
 ## Team Members
   * Aly Moustafa El-Kady
