@@ -67,7 +67,7 @@ while(True):
     elif (count_defects == 4 and flag == 0) or eye_flag == 0:
         print(eye_count)
         if eye_flag == 0:
-            if eye_count < 30:
+            if eye_count < 15:
                eye_count += 1
             else:               
                 print("Hi")
@@ -82,6 +82,7 @@ while(True):
                     list_player.stop()
                     window.close()
                     break
+        
         
         elif count_defects == 4 and flag == 0:    
             p.press("space") 
