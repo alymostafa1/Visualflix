@@ -7,9 +7,9 @@ A smart media player using opencv and image processing techniques. it's the perf
 ⮕ All you have to do is:  
   *  **To Pause/Play**  
   ![5](https://user-images.githubusercontent.com/64116564/120124296-12e1e400-c1b4-11eb-9bba-a7495038856b.jpg)
-  *  **To volum Down**  
+  *  **To turn volum up**  
   ![images](https://user-images.githubusercontent.com/64116564/120124269-eaf28080-c1b3-11eb-8fdf-c0c8cae166b1.jpg)
-  *  **To Volume UP**   
+  *  **To turn volume down**   
   ![download-_1_](https://user-images.githubusercontent.com/64116564/120124165-483a0200-c1b3-11eb-9e9f-6223eafaecec.jpg)      
 
 
