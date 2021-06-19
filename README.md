@@ -16,7 +16,7 @@ A smart media player using opencv and image processing techniques. it's the perf
 ## Overview Demo:
 
 
-[![Demo Video](Src/Cover.png)](https://www.youtube.com/watch?v=qVToYw_sG3g)
+[![Demo Video](src/Cover.png)](https://www.youtube.com/watch?v=qVToYw_sG3g)
 
 ## Implementation:
 Our proposed algorithm first handle the Camera scene as two areas, The ROI (Region of interest) where the hand will be detected, and the area of the Face, 
