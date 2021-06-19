@@ -1,9 +1,10 @@
 import cv2
 
-def faceDetect(frame): #, faceCascade, eyeCascade):
-    faceCascade = cv2.CascadeClassifier('haarcascades\\haarcascade_frontalface_default.xml')
+
+def faceDetect(frame, faceCascade, eyeCascade ): #, faceCascade, eyeCascade):
+    # faceCascade = cv2.CascadeClassifier('H:\\kolya\\4th year\\2nd Term\\Image processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_frontalface_default.xml')
                                         
-    eyeCascade = cv2.CascadeClassifier('haarcascades\\haarcascade_eye.xml')
+    # eyeCascade = cv2.CascadeClassifier('H:\\kolya\\4th year\\2nd Term\\Image processing\\SmartMediaPlayer\\src\\FaceDetection\\haarcascade_eye.xml')
     # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     try:
         # Detect face using a trained classifier

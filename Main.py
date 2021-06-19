@@ -18,18 +18,33 @@ if not vid .isOpened():
 eye_count = 0
 volume_flag = 0
 closed_eye_counter = 0
+faceCascade = cv2.CascadeClassifier('src\FaceDetection\haarcascades\haarcascade_frontalface_default.xml')
+eyeCascade = cv2.CascadeClassifier('src\FaceDetection\haarcascades\haarcascade_eye.xml')
 
   
 while(True):
 
     ret, frame = vid.read() 
-    # display = cv2.rectangle(frame.copy(),(1,1),(300,720),(0,0,0),5)
-    # cv2.imshow('curFrame',frame)
-    count_defects , display  =  HandDetection(frame,draw_thresholds = False, draw_contour = True)  
-    eye_flag  = faceDetect(frame)
     
-
-   
+    
+    '''
+    Hand Detection Function 
+    Input: The frame, And bolean flags to  show thresholds and contours 
+    Output: The number of count defects and the display 
+    '''
+    cv2.rectangle(frame,(1,1),(300,720),(0,0,0),5)
+    count_defects , display  =  HandDetection(frame,draw_thresholds = False, draw_contour = True)  
+    
+    '''
+    Face Detection Function 
+    Input: The current frame 
+    Output: Bolean flag True if eye is opened False if closed 
+    '''
+    eye_flag  = faceDetect(frame, faceCascade, eyeCascade)
+    
+    
+    
+    
     if count_defects == 0 and eye_flag == 1:   
         flag = 0         
     elif count_defects == 1 and eye_flag == 1:
@@ -47,17 +62,15 @@ while(True):
         flag = 0
         
     elif count_defects == 3 and eye_flag == 1:
-        # p.press("space") 
         flag = 0
 
     elif (count_defects == 4 and flag == 0) or eye_flag == 0:
-        # print(count_defects)
+        print(eye_count)
         if eye_flag == 0:
             if eye_count < 30:
-               # print(eye_count)
                eye_count += 1
-               # print("eyesclosed")
             else:               
+                print("Hi")
                 eye_count = 0
                 closed_eye_counter += 1
                 list_player.pause()
@@ -71,18 +84,14 @@ while(True):
                     break
         
         elif count_defects == 4 and flag == 0:    
-            # print(count_defects)
             p.press("space") 
             list_player.pause()
             flag = 1
             
     if eye_flag == 1:
         eye_count = 0
-    cv2.imshow('curFrame',frame)
-    
-    # print(count_defects)
-        #------------ The Event Loop ------------#
-    # while True:
+    cv2.imshow('curFrame',display)
+
     event, values = window.read(timeout=0)       # run with a timeout so that current location can be updated
     if event == sg.WIN_CLOSED:
         list_player.stop()
