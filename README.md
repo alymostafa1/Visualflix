@@ -62,9 +62,13 @@ This method has higher accuracy than the second method. The function draws recta
    <img src="https://user-images.githubusercontent.com/64116564/122652462-52f70f80-d13f-11eb-9f04-b55e53561895.jpeg" />  
 </div>   
 
-   4. Use your **right hand** and place it in **a white blank background**.    
+   4. Use your **right hand** and place it in **a white blank background**.  
       * Raise your 5 fingers to **Pause** and **Play**.  
-      * Raise 2 fingers to **Volume Up** and 3 fingers to **Volume Down**.   
+      * Raise 2 fingers to **Volume Up** and 3 fingers to **Volume Down**.  
+      <div align="center">
+   <img src="https://user-images.githubusercontent.com/64116564/122653006-314b5780-d142-11eb-926b-9ff5a78efd4d.jpeg" />  
+</div>   
+     
    5. If your eyes are closed for more than 30 seconds, **the video will Shut Down**.  
 
 ## Team Members
