@@ -50,6 +50,23 @@ This method has higher accuracy than the second method. The function draws recta
 1- git clone SmartMediaPlayer  
 2- Run main.py from any IDE 
 
+## User Guide:
+   1. Run the **main.py** from an IDE. 
+<div align="center">
+   <img src="https://user-images.githubusercontent.com/64116564/122652405-fdbafe00-d13e-11eb-8675-17d11612a40f.jpeg" />  
+</div>    
+
+   2. Copy the **video URL or its Local path on your PC**.  
+   3. Paste it in the Video URL or Local path bar and press on **"Load"** Button.
+<div align="center">
+   <img src="https://user-images.githubusercontent.com/64116564/122652462-52f70f80-d13f-11eb-9f04-b55e53561895.jpeg" />  
+</div>   
+
+   4. Use your **right hand** and place it in **a white blank background**.    
+      * Raise your 5 fingers to **Pause** and **Play**.  
+      * Raise 2 fingers to **Volume Up** and 3 fingers to **Volume Down**.   
+   5. If your eyes are closed for more than 30 seconds, **the video will Shut Down**.  
+
 ## Team Members
   * Aly Moustafa El-Kady
   * Aya Tarek El-Ashry
